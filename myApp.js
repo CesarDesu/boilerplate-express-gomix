@@ -6,6 +6,10 @@ console.log("Hello World");
 dotenv.config();
 
 // app.use(express.json());
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url} - ${req.ip}`);
+  next();
+});
 
 app.use("/public", express.static("public"));
 
