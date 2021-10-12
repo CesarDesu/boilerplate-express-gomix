@@ -1,10 +1,12 @@
 var express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 var app = express();
 console.log("Hello World");
 dotenv.config();
+
+app.use(express.json());
 
 // app.use(express.json());
 app.use((req, res, next) => {
@@ -13,7 +15,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/public", express.static("public"));
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
   //   res.send("Hello Express");
@@ -48,6 +50,11 @@ app.get("/:word/echo", (req, res) => {
 
 app.get("/name", (req, res) => {
   const { first, last } = req.query;
+  res.json({ name: `${first} ${last}` });
+});
+
+app.post("/name", (req, res) => {
+  const { first, last } = req.body;
   res.json({ name: `${first} ${last}` });
 });
 
